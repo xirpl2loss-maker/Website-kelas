@@ -3,33 +3,1181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beranda - Kelas XI RPL 2</title>
-    <link rel="stylesheet" href="style.css">
+    <title>XI RPL 2 - Official Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --blue-primary: #1e3a5f;
+            --blue-light: #2d5f9e;
+            --blue-accent: #3b82f6;
+            --blue-glow: #60a5fa;
+            --text-white: #ffffff;
+            --text-gray: #b0b0b0;
+            --text-light: #d0d0d0;
+            --gradient-hero: linear-gradient(135deg, #0a0a0a 0%, #0f1a2e 30%, #13294b 60%, #0d1f3c 100%);
+            --gradient-blue: linear-gradient(135deg, #1e3a5f, #2d5f9e, #3b82f6);
+            --gradient-card: linear-gradient(145deg, #111111, #1a1a2e);
+            --border-subtle: rgba(59, 130, 246, 0.2);
+            --shadow-blue: 0 8px 32px rgba(59, 130, 246, 0.15);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* ========== BACKGROUND ANIMATED PARTICLES ========== */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--blue-accent);
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.2;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            transition: var(--transition);
+            padding: 0 2rem;
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 10, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 65px;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-white);
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-logo i {
+            font-size: 1.6rem;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0.3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-gray);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-white);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--blue-accent);
+            border-radius: 2px;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 26px;
+            height: 2.5px;
+            background: var(--text-white);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            position: relative;
+            z-index: 1;
+            padding-top: 65px;
+        }
+
+        .page {
+            display: none;
+            animation: fadeSlideIn 0.5s ease forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title .line {
+            width: 60px;
+            height: 3px;
+            background: var(--gradient-blue);
+            margin: 0.5rem auto;
+            border-radius: 3px;
+        }
+
+        .section-title p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* ========== HOME PAGE ========== */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-hero);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(96, 165, 250, 0.05) 0%, transparent 50%);
+            animation: heroGlow 8s ease-in-out infinite;
+        }
+
+        @keyframes heroGlow {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(5%, -3%);
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--blue-glow);
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            background: var(--gradient-blue);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
+        }
+
+        .btn-outline {
+            display: inline-block;
+            padding: 0.85rem 2rem;
+            background: transparent;
+            color: var(--blue-glow);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            border: 1.5px solid rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--blue-accent);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Tentang Section */
+        .about-section {
+            padding: 4rem 0;
+            background: var(--bg-dark);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-subtle);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image i {
+            font-size: 6rem;
+            color: var(--blue-accent);
+            opacity: 0.6;
+        }
+
+        .about-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-white);
+        }
+
+        .about-text p {
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--blue-glow);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        /* ========== STRUKTUR KELAS PAGE ========== */
+        .struktur-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            justify-items: center;
+        }
+
+        .struktur-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            width: 100%;
+            max-width: 280px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .struktur-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-blue);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .struktur-card.featured {
+            border-color: var(--blue-accent);
+            box-shadow: var(--shadow-blue);
+            background: linear-gradient(145deg, #111827, #0f1d36);
+        }
+
+        .struktur-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--gradient-blue);
+            margin: 0 auto 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .struktur-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .struktur-card .jabatan {
+            color: var(--blue-glow);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .struktur-card .nama {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ========== ANGGOTA PAGE ========== */
+        .anggota-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .anggota-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .anggota-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-blue);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .anggota-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--blue-primary);
+            margin: 0 auto 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .anggota-card h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .anggota-card .nim {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* ========== GALERI PAGE ========== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-item {
+            border-radius: 14px;
+            overflow: hidden;
+            height: 220px;
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-blue);
+            border-color: var(--blue-accent);
+        }
+
+        .gallery-item i {
+            font-size: 3rem;
+            color: var(--blue-accent);
+            opacity: 0.5;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover i {
+            opacity: 0.8;
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            padding: 1.5rem 1rem 1rem;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ========== MEDIA SOSIAL PAGE ========== */
+        .sosmed-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .sosmed-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-white);
+            display: block;
+        }
+
+        .sosmed-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-blue);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .sosmed-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .sosmed-icon.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        .sosmed-icon.tiktok {
+            background: #000;
+            border: 2px solid #fff;
+        }
+        .sosmed-icon.youtube {
+            background: #ff0000;
+        }
+        .sosmed-icon.whatsapp {
+            background: #25d366;
+        }
+
+        .sosmed-card h4 {
+            margin-bottom: 0.3rem;
+        }
+        .sosmed-card p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            background: #080808;
+            border-top: 1px solid var(--border-subtle);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: var(--text-gray);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            color: var(--blue-glow);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 320px;
+                height: 100vh;
+                background: rgba(10, 10, 10, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 0.5rem;
+                transition: var(--transition);
+                border-left: 1px solid var(--border-subtle);
+            }
+
+            .nav-links.open {
+                right: 0;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 0.8rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-image {
+                height: 250px;
+            }
+            .stats-row {
+                gap: 1rem;
+            }
+            .struktur-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            .struktur-card {
+                padding: 1.5rem 1rem;
+            }
+            .struktur-avatar {
+                width: 65px;
+                height: 65px;
+                font-size: 1.6rem;
+            }
+            .anggota-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .gallery-item {
+                height: 160px;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .struktur-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            .anggota-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            .anggota-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+            .anggota-card h4 {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Navigasi -->
-    <nav>
-        <div class="logo">🏫 XI RPL 2</div>
-        <ul>
-            <li><a href="index.html">Beranda</a></li>
-            <li><a href="profil.html">Profil</a></li>
-            <li><a href="jadwal.html">Jadwal</a></li>
-        </ul>
+    <!-- BACKGROUND PARTICLES -->
+    <div class="particles-bg" id="particles"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-container">
+            <a href="#" class="nav-logo" onclick="navigateTo('home')">
+                <i class="fas fa-code"></i> XI RPL 2
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" class="active" data-page="home" onclick="navigateTo('home')">Beranda</a></li>
+                <li><a href="#" data-page="struktur" onclick="navigateTo('struktur')">Struktur</a></li>
+                <li><a href="#" data-page="anggota" onclick="navigateTo('anggota')">Anggota</a></li>
+                <li><a href="#" data-page="galeri" onclick="navigateTo('galeri')">Galeri</a></li>
+                <li><a href="#" data-page="sosmed" onclick="navigateTo('sosmed')">Media Sosial</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
 
-    <!-- Isi Halaman -->
-    <div class="container">
-        <h1>Selamat Datang di Kelas XI RPL 2</h1>
-        <div class="card">
-            <p>Kami adalah siswa jurusan <strong>Rekayasa Perangkat Lunak (RPL)</strong> yang siap mencetak masa depan digital!</p>
-            <p>Website ini berisi informasi statis seputar kelas kami.</p>
-            <hr>
-            <p><strong>📋 Jumlah Siswa:</strong> 35 Orang</p>
-            <p><strong>👨‍🏫 Wali Kelas:</strong> Chairul Arif Utama, S.Or M.Pd</p>
-            <p><strong>🏢 Ruang Kelas:</strong> Lantai 1, Ruang 2</p>
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+
+        <!-- ==================== HOME PAGE ==================== -->
+        <div class="page active" id="page-home">
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-content">
+                    <span class="hero-badge">⚡ SMK NEGERI TERCINTA</span>
+                    <h1>Selamat Datang di<br><span class="gradient-text">XI RPL 2</span></h1>
+                    <p>Rekayasa Perangkat Lunak — Angkatan yang solid, kreatif, dan siap berkarya. Bersama kita bangun skill, karakter, dan masa depan di dunia teknologi.</p>
+                    <a href="#" onclick="navigateTo('struktur'); return false;" class="btn-primary">
+                        <i class="fas fa-users"></i> Lihat Struktur Kelas
+                    </a>
+                    <a href="#" onclick="navigateTo('galeri'); return false;" class="btn-outline">
+                        <i class="fas fa-images"></i> Galeri Kami
+                    </a>
+                </div>
+            </section>
+
+            <!-- Tentang Kelas -->
+            <section class="about-section">
+                <div class="section-container">
+                    <div class="about-grid">
+                        <div class="about-image">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="about-text">
+                            <h3>Tentang XI RPL 2</h3>
+                            <p>Kami adalah kelas XI jurusan Rekayasa Perangkat Lunak (RPL) angkatan 2024/2025. Terdiri dari siswa-siswi berbakat yang antusias belajar pemrograman, desain UI/UX, database, dan pengembangan aplikasi.</p>
+                            <p>Dengan semangat kolaborasi dan inovasi, kami aktif dalam berbagai project, lomba coding, dan kegiatan sekolah. Website ini menjadi wadah informasi dan kebanggaan kelas kami.</p>
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <div class="stat-number" id="count-anggota">36</div>
+                                    <div class="stat-label">Siswa</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">1</div>
+                                    <div class="stat-label">Wali Kelas</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">5+</div>
+                                    <div class="stat-label">Project</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
+
+        <!-- ==================== STRUKTUR PAGE ==================== -->
+        <div class="page" id="page-struktur">
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>Struktur Kelas</h2>
+                    <div class="line"></div>
+                    <p>Organisasi internal XI RPL 2 periode 2024/2025</p>
+                </div>
+                <div class="struktur-grid">
+                    <div class="struktur-card featured">
+                        <div class="struktur-avatar">WA</div>
+                        <span class="jabatan">Wali Kelas</span>
+                        <h4>Bpk/Ibu Guru</h4>
+                        <p class="nama">Pembimbing Utama</p>
+                    </div>
+                    <div class="struktur-card featured">
+                        <div class="struktur-avatar">KT</div>
+                        <span class="jabatan">Ketua Kelas</span>
+                        <h4>Nama Ketua</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                    <div class="struktur-card">
+                        <div class="struktur-avatar">WK</div>
+                        <span class="jabatan">Wakil Ketua</span>
+                        <h4>Nama Wakil</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                    <div class="struktur-card">
+                        <div class="struktur-avatar">SK</div>
+                        <span class="jabatan">Sekretaris</span>
+                        <h4>Nama Sekretaris</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                    <div class="struktur-card">
+                        <div class="struktur-avatar">BD</div>
+                        <span class="jabatan">Bendahara</span>
+                        <h4>Nama Bendahara</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                    <div class="struktur-card">
+                        <div class="struktur-avatar">H1</div>
+                        <span class="jabatan">Humas</span>
+                        <h4>Nama Humas</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                    <div class="struktur-card">
+                        <div class="struktur-avatar">KB</div>
+                        <span class="jabatan">Keamanan</span>
+                        <h4>Nama Keamanan</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                    <div class="struktur-card">
+                        <div class="struktur-avatar">PR</div>
+                        <span class="jabatan">Perlengkapan</span>
+                        <h4>Nama Perlengkapan</h4>
+                        <p class="nama">Siswa XI RPL 2</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ANGGOTA PAGE ==================== -->
+        <div class="page" id="page-anggota">
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>Anggota Kelas</h2>
+                    <div class="line"></div>
+                    <p>Daftar seluruh siswa XI RPL 2</p>
+                </div>
+                <div class="anggota-grid" id="anggotaGrid">
+                    <!-- Diisi oleh JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== GALERI PAGE ==================== -->
+        <div class="page" id="page-galeri">
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>Galeri Kegiatan</h2>
+                    <div class="line"></div>
+                    <p>Momen kebersamaan XI RPL 2</p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <i class="fas fa-camera-retro"></i>
+                        <div class="gallery-overlay">📸 Foto Kelas Bareng</div>
+                    </div>
+                    <div class="gallery-item">
+                        <i class="fas fa-laptop"></i>
+                        <div class="gallery-overlay">💻 Praktikum Coding</div>
+                    </div>
+                    <div class="gallery-item">
+                        <i class="fas fa-trophy"></i>
+                        <div class="gallery-overlay">🏆 Juara Lomba</div>
+                    </div>
+                    <div class="gallery-item">
+                        <i class="fas fa-users"></i>
+                        <div class="gallery-overlay">🎉 Acara Kelas</div>
+                    </div>
+                    <div class="gallery-item">
+                        <i class="fas fa-microphone"></i>
+                        <div class="gallery-overlay">🎤 Presentasi Project</div>
+                    </div>
+                    <div class="gallery-item">
+                        <i class="fas fa-hiking"></i>
+                        <div class="gallery-overlay">🏕️ Outing Class</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== MEDIA SOSIAL PAGE ==================== -->
+        <div class="page" id="page-sosmed">
+            <div class="section-container">
+                <div class="section-title">
+                    <h2>Media Sosial</h2>
+                    <div class="line"></div>
+                    <p>Follow dan support XI RPL 2 di platform berikut</p>
+                </div>
+                <div class="sosmed-grid">
+                    <a href="https://instagram.com/xiirpl2" target="_blank" class="sosmed-card">
+                        <div class="sosmed-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <h4>Instagram</h4>
+                        <p>@xiirpl2</p>
+                        <p style="margin-top:0.5rem; color:#60a5fa;">Klik untuk follow ✨</p>
+                    </a>
+                    <a href="https://tiktok.com/@xiirpl2" target="_blank" class="sosmed-card">
+                        <div class="sosmed-icon tiktok">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <h4>TikTok</h4>
+                        <p>@xiirpl2</p>
+                        <p style="margin-top:0.5rem; color:#60a5fa;">Klik untuk follow 🎵</p>
+                    </a>
+                    <a href="https://youtube.com/@xiirpl2" target="_blank" class="sosmed-card">
+                        <div class="sosmed-icon youtube">
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                        <h4>YouTube</h4>
+                        <p>XI RPL 2 Official</p>
+                        <p style="margin-top:0.5rem; color:#60a5fa;">Klik untuk subscribe ▶️</p>
+                    </a>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="sosmed-card">
+                        <div class="sosmed-icon whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h4>WhatsApp Group</h4>
+                        <p>Grup Kelas XI RPL 2</p>
+                        <p style="margin-top:0.5rem; color:#60a5fa;">Klik untuk chat 💬</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 XI RPL 2 — All Rights Reserved. Made with ❤️</p>
+            <div class="footer-social">
+                <a href="https://instagram.com/xiirpl2" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://tiktok.com/@xiirpl2" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://youtube.com/@xiirpl2" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://wa.me/6281234567890" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ========== PARTICLES BACKGROUND ==========
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const count = 40;
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 12 + 8 + 's';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // ========== NAVIGATION SYSTEM ==========
+        let currentPage = 'home';
+
+        function navigateTo(page) {
+            // Update pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById('page-' + page);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                // Re-trigger animation
+                targetPage.style.animation = 'none';
+                targetPage.offsetHeight;
+                targetPage.style.animation = 'fadeSlideIn 0.5s ease forwards';
+            }
+
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+            const activeLink = document.querySelector(`.nav-links a[data-page="${page}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            currentPage = page;
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Close mobile menu
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+            if (navLinks.classList.contains('open')) {
+                navLinks.classList.remove('open');
+                hamburger.classList.remove('active');
+            }
+        }
+
+        // ========== MOBILE MENU TOGGLE ==========
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+            navLinks.classList.toggle('open');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+            if (!navLinks.contains(e.target) && !hamburger.contains(e.target) && navLinks.classList.contains(
+                    'open')) {
+                navLinks.classList.remove('open');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // ========== NAVBAR SCROLL EFFECT ==========
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== GENERATE ANGGOTA ==========
+        function generateAnggota() {
+            const grid = document.getElementById('anggotaGrid');
+            const namaDepan = ['Ahmad', 'Budi', 'Citra', 'Dewi', 'Eko', 'Fajar', 'Gilang', 'Hana', 'Irfan', 'Joko',
+                'Kartika', 'Lina', 'Mega', 'Nanda', 'Oki', 'Putri', 'Qori', 'Rizky', 'Sinta', 'Tono',
+                'Umar', 'Vina', 'Wahyu', 'Xenia', 'Yoga', 'Zahra', 'Adi', 'Bayu', 'Cindy', 'Dimas',
+                'Eka', 'Fitri', 'Gita', 'Hadi', 'Indah', 'Jamal'
+            ];
+            const namaBelakang = ['Pratama', 'Santoso', 'Wijaya', 'Kusuma', 'Nugroho', 'Saputra', 'Permana', 'Hidayat',
+                'Ramadhan', 'Setiawan', 'Maulana', 'Putra', 'Anggara', 'Pangestu', 'Utama', 'Firmansyah'
+            ];
+
+            grid.innerHTML = '';
+            for (let i = 0; i < 36; i++) {
+                const depan = namaDepan[i] || 'Siswa';
+                const belakang = namaBelakang[Math.floor(Math.random() * namaBelakang.length)];
+                const inisial = depan.charAt(0) + belakang.charAt(0);
+                const nomor = String(i + 1).padStart(2, '0');
+
+                const card = document.createElement('div');
+                card.classList.add('anggota-card');
+                card.innerHTML = `
+                    <div class="anggota-avatar">${inisial}</div>
+                    <h4>${depan} ${belakang}</h4>
+                    <p class="nim">No. ${nomor} / XI RPL 2</p>
+                `;
+                grid.appendChild(card);
+            }
+
+            // Update stat
+            const countEl = document.getElementById('count-anggota');
+            if (countEl) countEl.textContent = '36';
+        }
+        generateAnggota();
+
+        // ========== INIT ==========
+        console.log('🚀 XI RPL 2 Website siap!');
+        console.log('📱 Multi-page: Beranda | Struktur | Anggota | Galeri | Media Sosial');
+        console.log('🎨 Tema: Hitam-Biru-Putih Gradient');
+        console.log('💡 Ganti data dummy dengan data asli kelas kalian ya!');
+    </script>
 </body>
 </html>
